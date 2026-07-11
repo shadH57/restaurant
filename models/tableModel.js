@@ -11,16 +11,20 @@ const tableSchema = new mongoose.Schema(
             type: Boolean,
             default: true,
         },
-        order: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Order'}],
+        orders: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Order'}],
         openedAt: {
             type: Date,
             default: Date.now
         },
         closedAt: Date,
-        totalAmount: Number,
-    }
+        totalAmount: {
+            type: Number,
+            default: 0
+        },
+    },
+    { timestamps: true }
 )
 
 const Table = mongoose.model('Table', tableSchema);
 
-module.exports = Table;
+export default Table

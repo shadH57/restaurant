@@ -7,9 +7,19 @@ const orderSchema = new mongoose.Schema(
             required: true,
         },
         items: [{
-            name: String,
-            quantity: Number,
-            price: Number,
+            name: {
+                type: String,
+                required: true
+            },
+            quantity: {
+                type: Number,
+                required: true,
+                min: 1
+            },
+            price: {
+                type: Number,
+                required: true
+            },
             note: String,
         }],
         status: {
@@ -17,9 +27,10 @@ const orderSchema = new mongoose.Schema(
             enum: ['Pending', 'Preparing', 'Served', 'Cancelled'],
             default: 'Pending'
         }
-    }
+    },
+    { timestamps: true}
 )
 
 const Order = mongoose.model('Order', orderSchema);
 
-module.exports = Order
+export default Order

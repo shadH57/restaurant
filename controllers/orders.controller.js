@@ -9,7 +9,7 @@ const getMyOrders = async (req,res) => {
     }
 
     res.status(200).json(table.orders)
-    }catch (err) {
+    }catch (error) {
         res.status(500).json({ message: error.message });
     }
     

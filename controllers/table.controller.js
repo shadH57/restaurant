@@ -4,7 +4,7 @@ const getAllTables = async (req,res) => {
     try{
         const tables = await Table.find({})
 
-        if(tables === 0){
+        if(tables.length === 0){
             return res.status(200).json({message: "You dont have any tables!"})
         }
 
@@ -30,7 +30,7 @@ const getTable = async (req,res) => {
 
 const createTable = async (req,res) => {
     try{
-        const tableNumber = req.body;
+        const {tableNumber} = req.body;
         
         const newTable = new Table({
             tableNumber,
@@ -68,7 +68,7 @@ const updateTable = async (req,res) => {
 
         await table.save()
 
-        res.status(200).json({message: "Tabel successfuly updated"})        
+        res.status(200).json({message: "Table successfuly updated"})        
     } catch(err) {
         if (err.code === 11000) {
             return res.status(400).json({ message: "That table number is already reserved!" });
@@ -88,7 +88,7 @@ const deleteTable = async (req,res) => {
 
         const deletedTable = await Table.findByIdAndDelete(req.params._id)
 
-        res.status(200).json(deleteTable)
+        res.status(200).json(deletedTable)
     } catch(err) {
         res.status(500).json({message: err.message})
     }

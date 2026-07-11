@@ -2,8 +2,12 @@ import Table from '../models/tableModel.js'
 
 const orderFood = async (req,res) => {
     try{
-        const orderDate = req.body
-        const table = await Table.findById(req.params._id).select('isActive')
+        const orderData = req.body
+        const table = await Table.findById(req.params._id)
+
+        if(!table) {
+            return res.status(404).json({message: "table not found!"})
+        }
         
 
         if(table.isActive == false){
@@ -15,16 +19,15 @@ const orderFood = async (req,res) => {
             total += item.price * (item.quantity || 1);
         });
 
-        const orders = await Table.findByIdAndUpdate(req.params._id, {
-            isActive: false,
-            $push: {order: orderDate},
-            closedAt: Date.now(),
-            totalAmount: total
-            },
-            {new: true}
-        )
+        table.isActive = false
 
-        res.status(200).json(order)
+        table.orders.push(orderData)
+        table.closedAt = Date.now()
+        table.totalAmount = total
+
+        const updatedTable = table.save();
+
+        res.status(200).json(updatedTable)
     } catch(err){
         res.status(500).json(err.message)
     }
