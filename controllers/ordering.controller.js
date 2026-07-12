@@ -10,7 +10,7 @@ const orderFood = async (req,res) => {
         }
         
 
-        if(table.isActive === true){
+        if(table.isActive === false){
             return res.status(404).json({message: "This table is not available"})
         }
 
@@ -43,7 +43,7 @@ const cancellingOrder = async (req,res) => {
             return res.status(404).json({message: "This tabel does not have any order"})
         }
 
-        if (table.isActive === false || table.orders.length === 0) {
+        if (table.isActive === true || table.orders.length === 0) {
             return res.status(400).json({ message: "This table does not have any active orders to cancel." });
         }
 
