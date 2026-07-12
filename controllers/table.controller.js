@@ -57,14 +57,13 @@ const createTable = async (req,res) => {
 const updateTable = async (req,res) => {
     try{
         const table = await Table.findById(req.params._id);
-        const { tableNumber, order } = req.body;
+        const { tableNumber } = req.body;
 
         if(!table){
             return res.status(404).json({message: "Table not found!"})
         }
 
         if (tableNumber) table.tableNumber = tableNumber;
-        if(order) table.order = order;
 
         await table.save()
 

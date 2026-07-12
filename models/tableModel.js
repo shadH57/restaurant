@@ -11,7 +11,27 @@ const tableSchema = new mongoose.Schema(
             type: Boolean,
             default: true,
         },
-        orders: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Order'}],
+        orders: [{items: [{
+            name: {
+                type: String,
+                required: true
+            },
+            quantity: {
+                type: Number,
+                required: true,
+                min: 1
+            },
+            price: {
+                type: Number,
+                required: true
+            },
+            note: String,
+        }],
+        status: {
+            type: String,
+            enum: ['Pending', 'Preparing', 'Served', 'Cancelled'],
+            default: 'Pending'
+        }}],
         openedAt: {
             type: Date,
             default: Date.now

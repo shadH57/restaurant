@@ -8,7 +8,10 @@ const getMyOrders = async (req,res) => {
         return res.status(404).json('Table not found')
     }
 
-    res.status(200).json(table.orders)
+    res.status(200).json({
+        orders: table.orders,
+        totalAmount: table.totalAmount
+    })
     }catch (error) {
         res.status(500).json({ message: error.message });
     }

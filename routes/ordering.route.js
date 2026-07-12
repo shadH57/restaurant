@@ -3,7 +3,7 @@ import { orderFood, cancellingOrder } from '../controllers/ordering.controller.j
 
 const orderingRoute = express.Router()
 
-orderingRoute.put('/:_id/order', orderFood);
-orderingRoute.delete('/delete/:_id', cancellingOrder)
+orderingRoute.put('/order/:_id', orderFood);
+orderingRoute.delete('/cancellorder/:_id', cancellingOrder)
 
 export default orderingRoute

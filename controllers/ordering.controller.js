@@ -2,7 +2,7 @@ import Table from '../models/tableModel.js'
 
 const orderFood = async (req,res) => {
     try{
-        const orderData = req.body
+        const {items, status} = req.body
         const table = await Table.findById(req.params._id)
 
         if(!table) {
@@ -10,22 +10,24 @@ const orderFood = async (req,res) => {
         }
         
 
-        if(table.isActive == false){
+        if(table.isActive === true){
             return res.status(404).json({message: "This table is not available"})
         }
 
         let total = 0;
-        orderData.items.forEach(item => {
+        items.forEach(item => {
             total += item.price * (item.quantity || 1);
         });
 
-        table.isActive = false
+        table.isActive = false;
+        table.orders.push({
+            items,
+            status: status || 'Pending'
+        });
+        table.closedAt = Date.now();
+        table.totalAmount = total;
 
-        table.orders.push(orderData)
-        table.closedAt = Date.now()
-        table.totalAmount = total
-
-        const updatedTable = table.save();
+        const updatedTable = await table.save();
 
         res.status(200).json(updatedTable)
     } catch(err){
@@ -46,7 +48,7 @@ const cancellingOrder = async (req,res) => {
         }
 
         table.orders = [];
-        table.isActive = false;
+        table.isActive = true;
         table.totalAmount = 0;
         table.openedAt = Date.now()
 
