@@ -11,32 +11,33 @@ const tableSchema = new mongoose.Schema(
             type: Boolean,
             default: true,
         },
-        orders: [{items: [{
-            name: {
-                type: String,
-                required: true
-            },
-            quantity: {
-                type: Number,
-                required: true,
-                min: 1
-            },
-            price: {
-                type: Number,
-                required: true
-            },
-            note: String,
-        }],
+        orders: {
+            type: [
+                {
+                    name: {
+                        type: String,
+                        required: true
+                    },
+                    quantity: {
+                        type: Number,
+                        required: true,
+                        min: 1
+                    },
+                    price: {
+                        type: Number,
+                        required: true,
+                        min: 0
+                    },
+                    note: String,
+                }
+            ],
+            default: []
+        },
         status: {
             type: String,
             enum: ['Pending', 'Preparing', 'Served', 'Cancelled'],
             default: 'Pending'
-        }}],
-        openedAt: {
-            type: Date,
-            default: Date.now
         },
-        closedAt: Date,
         totalAmount: {
             type: Number,
             default: 0

@@ -11,7 +11,7 @@ const menuRoute = express.Router()
 
 menuRoute.get("/all", getAllItems)
 menuRoute.get('/:_id', getItem)
-menuRoute.post("/addItem", addItem)
+menuRoute.post("/add", addItem)
 menuRoute.put('/:_id', updateItem)
 menuRoute.delete('/:_id', deleteItem)
 

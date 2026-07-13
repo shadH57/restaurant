@@ -24,7 +24,6 @@ const orderFood = async (req,res) => {
             items,
             status: status || 'Pending'
         });
-        table.closedAt = Date.now();
         table.totalAmount = total;
 
         const updatedTable = await table.save();
@@ -50,7 +49,6 @@ const cancellingOrder = async (req,res) => {
         table.orders = [];
         table.isActive = true;
         table.totalAmount = 0;
-        table.openedAt = Date.now()
 
         await table.save()
 
