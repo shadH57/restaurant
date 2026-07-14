@@ -1,21 +1,17 @@
 import express from 'express'
+import {
+    signUp,
+    logIn,
+    updateUser,
+    deleteUser
+} from '../controllers/user.controller.js'
 
 const userRoute = express.Router()
 
-userRoute.get('/all', (req,res) => {
-    res.status(200).json({message: "here is all users"})
-})
-userRoute.get('/:_id', (req,res) => {
-    res.status(200).json({message: "here is a user"})
-})
-userRoute.post('/add', (req,res) => {
-    res.status(200).json({message: "User created!"})
-})
-userRoute.put('/:_id', (req,res) => {
-    res.status(200).json({message: "User updated"})
-})
-userRoute.delete('/:_id', (req,res) => {
-    res.status(200).json({message: "User Deleted"})
-})
+// login uses request body; use POST instead of GET
+userRoute.post('/login', logIn)
+userRoute.post('/signup', signUp)
+userRoute.put('/:_id', updateUser)
+userRoute.delete('/:_id', deleteUser)
 
 export default userRoute
